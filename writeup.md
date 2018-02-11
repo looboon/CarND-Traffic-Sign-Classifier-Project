@@ -164,7 +164,7 @@ Dropout switches on and off the connections between filters/units with dropout i
 
 Here are five German traffic signs that I found on the web and these images are after resizing to fit the 32x32x3 for the model input:
 
-![alt text][https://github.com/looboon/CarND-Traffic-Sign-Classifier-Project/blob/master/markup_images/new_web_images.png)
+![alt text](https://github.com/looboon/CarND-Traffic-Sign-Classifier-Project/blob/master/markup_images/new_web_images.png)
 
 In general, we can see that there is a loss of image quality and detail after resizing and that makes the pictures harder to classify in general.
 
@@ -193,6 +193,8 @@ The model was able to correctly guess 4 of the 5 traffic signs, which gives an a
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
+![alt text](https://github.com/looboon/CarND-Traffic-Sign-Classifier-Project/blob/master/markup_images/first_image.png)
+
 For the first image, the model is relatively sure that this is a turn right ahead (probability of 0.985), and the image does contain a turn right ahead sign. The top five soft max probabilities were
 
 | Probability         	|     Prediction	        					| 
@@ -203,6 +205,7 @@ For the first image, the model is relatively sure that this is a turn right ahea
 | .001	      			| Turn left ahead					 				|
 | .000				    | Keep left      							|
 
+![alt text](https://github.com/looboon/CarND-Traffic-Sign-Classifier-Project/blob/master/markup_images/second_image.png)
 
 For the second image, the model was quite uncertain what image was it, with only a 0.361 probability of it being a dangerous curve to the right, but the image is actually slippery road. The probability of it being slippery road sign was 0.108. The top five soft max probabilities were
 
@@ -214,6 +217,8 @@ For the second image, the model was quite uncertain what image was it, with only
 | .106	      			| No entry					 				|
 | .065				    | No passing for vehicles over 3.5 metric tons      							|
 
+![alt text](https://github.com/looboon/CarND-Traffic-Sign-Classifier-Project/blob/master/markup_images/third_image.png)
+
 For the third image, the model is relatively sure that this is a children crossing (probability of 0.993) and it was correct. The top five soft max probabilities were
 
 | Probability         	|     Prediction	        					| 
@@ -224,6 +229,8 @@ For the third image, the model is relatively sure that this is a children crossi
 | .000	      			| Pedestrians					 				|
 | .000				    | Dangerous curve to the right      							|
 
+![alt text](https://github.com/looboon/CarND-Traffic-Sign-Classifier-Project/blob/master/markup_images/fourth_image.png)
+
 For the fourth image, the model is very sure that this is a 30kmph speed limit sign (probability of 1.0) and it was correct. The top five soft max probabilities were
 
 | Probability         	|     Prediction	        					| 
@@ -233,6 +240,8 @@ For the fourth image, the model is very sure that this is a 30kmph speed limit s
 | .000					| Speed limit (80km/h)											|
 | .000	      			| Speed limit (100km/h)					 				|
 | .000				    | Speed limit (70km/h)      							|
+
+![alt text](https://github.com/looboon/CarND-Traffic-Sign-Classifier-Project/blob/master/markup_images/fifth_image.png)
 
 For the fifth image, the model is very sure that this is a stop sign (probability of 1.0) and it was correct. The top five soft max probabilities were
 
