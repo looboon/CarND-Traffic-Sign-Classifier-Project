@@ -45,40 +45,41 @@ You're reading it! and here is a link to my [project code](https://github.com/ud
 I used the pandas library to calculate summary statistics of the traffic
 signs data set:
 
-* The size of training set is ?
-* The size of the validation set is ?
-* The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
+* The size of training set is 34799
+* The size of the validation set is 4410
+* The size of test set is 12630
+* The shape of a traffic sign image is (32,32,3)
+* The number of unique classes/labels in the data set is 43
 
 #### 2. Include an exploratory visualization of the dataset.
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
+Here is an exploratory visualization of the data set. It is a chart showing the distribution of classes in the training set.
 
-![alt text][image1]
+![alt text](https://github.com/looboon/CarND-Traffic-Sign-Classifier-Project/blob/master/markup_images/training_distribution.png)
+
+From the graph, we can see that some of the classes have a much higher number of samples in the training dataset compared to the rest, such as speed limit signs for 30, 50kmph. This may make the neural network learn more of these sample and be biased towards learning these few classes compared to the others, especially if the training sample distribution and the actual distribution of the signs differ greatly, resulting in what we call a covariate shift.
+
+We also took a sample of a picture from each class to take a look at the image corresponding to each label.
+
+![alt text](https://github.com/looboon/CarND-Traffic-Sign-Classifier-Project/blob/master/markup_images/exploration.png)
 
 ### Design and Test a Model Architecture
 
 #### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-As a first step, I decided to convert the images to grayscale because ...
+For image preprocessing, I observed that most importantly, the images need to be normalized so that the image data distribution has 0 mean and equal variance. Without this, the neural network would have a difficult time trying to learn from the image data. We can do this by using a tool in opencv:
 
-Here is an example of a traffic sign image before and after grayscaling.
+cv2.normalize(image, zeros, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
 
-![alt text][image2]
+This normalizes our images for our optimizer. We can see the effects of preprocessing before:
 
-As a last step, I normalized the image data because ...
+![alt text](https://github.com/looboon/CarND-Traffic-Sign-Classifier-Project/blob/master/markup_images/before_preprocessing.png)
 
-I decided to generate additional data because ... 
+And also after the preprocessing:
 
-To add more data to the the data set, I used the following techniques because ... 
+![alt text](https://github.com/looboon/CarND-Traffic-Sign-Classifier-Project/blob/master/markup_images/after_preprocessing.png)
 
-Here is an example of an original image and an augmented image:
-
-![alt text][image3]
-
-The difference between the original data set and the augmented data set is the following ... 
-
+What we can observe is that the contrast is much sharper between the white regions in the sign and the other symbols in this sign. This preprocessing will definitely help later when we train the convolutional kernels later in the CNN, as it would be much easier to construct convolutional kernels that specialise in detecting these edge featuers if the contrast is much higher.
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
@@ -87,12 +88,24 @@ My final model consisted of the following layers:
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
+| Convolution 5x5     	| 1x1 stride, valid padding, outputs 28x28x16 	|
 | RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
+| Max pooling	      	| 2x2 stride,  outputs 14x14x16 				|
+| Dropout					|	keep probability = 0.5			|
+| Convolution 5x5	    | 1x1 stride, valid padding, outputs 10x10x32	|
+| RELU					|												|
+| Max pooling	      	| 2x2 stride,  outputs 5x5x32 				|
+| Dropout					|	keep probability = 0.5			|
+| Flatten	| 800 output        									|
+| Fully connected		| 800 input, 256 output        									|
+| RELU					|												|
+| Batch Norm					|												|
+| Dropout					|	keep probability = 0.5			|
+| Fully connected		| 256 input, 128 output        									|
+| RELU					|												|
+| Batch Norm					|												|
+| Dropout					|	keep probability = 0.5			|
+| Softmax				| 128 input, 43 output classes       									|
 |						|												|
 |						|												|
  
